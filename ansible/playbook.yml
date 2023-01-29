@@ -1,0 +1,30 @@
+---
+- hosts: all
+  gather_facts: false
+  vars:
+    DOMAIN: megacorp.industries
+    NETBIOS: MEGACORP
+    SAFE_PASSWD: changeme123!
+  tasks:
+     - name: Install all updates and reboot as many times as needed
+       win_updates:
+         category_names:
+           - SecurityUpdates
+           - CriticalUpdates
+         reboot: yes
+
+     - win_domain:
+         dns_domain_name: '{{ DOMAIN }}'
+         domain_netbios_name: '{{ NETBIOS }}'
+         safe_mode_password: '{{ SAFE_PASSWD }}'
+       register: domain_install
+
+     - win_reboot:
+       when: domain_install.reboot_required
+
+     - win_domain_controller:
+         dns_domain_name: '{{ DOMAIN }}'
+         domain_admin_user: Dedsec@megacorp.industries
+         domain_admin_password: changeme
+         safe_mode_password: ' {{ SAFE_PASSWD }}'
+         state: domain_controller
