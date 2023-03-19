@@ -1,7 +1,7 @@
-[MCDC01]
+[hosts]
 <DC-IP>
 
-[MCDC01:vars]
+[hosts:vars]
 ansible_user=<USERNAME>
 ansible_password=<PASSWORD>
 ansible_connection=winrm
