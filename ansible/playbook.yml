@@ -2,9 +2,9 @@
 - hosts: all
   gather_facts: false
   vars:
-    DOMAIN: megacorp.industries
-    NETBIOS: MEGACORP
-    SAFE_PASSWD: changeme123!
+    DOMAIN: <DOMAIN>
+    NETBIOS: <NETBIOS_NAME>
+    SAFE_PASSWD: <SAFE_PASSWD>
   tasks:
      - name: Install all updates and reboot as many times as needed
        win_updates:
@@ -24,7 +24,7 @@
 
      - win_domain_controller:
          dns_domain_name: '{{ DOMAIN }}'
-         domain_admin_user: Dedsec@megacorp.industries
-         domain_admin_password: changeme
+         domain_admin_user: <ADMIN_USER>
+         domain_admin_password: <ADMIN_PASSWD>
          safe_mode_password: ' {{ SAFE_PASSWD }}'
          state: domain_controller
